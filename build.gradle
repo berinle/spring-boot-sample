@@ -1,0 +1,55 @@
+buildscript {
+    repositories {
+        maven { url 'http://repo.springsource.org/libs-snapshot' }
+        mavenLocal()
+    }
+    dependencies {
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:0.5.0.M4')
+    }
+}
+
+
+apply plugin: 'groovy'
+
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'app'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'http://repo.springsource.org/libs-snapshot' }
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web:0.5.0.M4'){
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    compile('org.springframework.boot:spring-boot-starter-jetty:0.5.0.M4')
+    compile('org.springframework.boot:spring-boot-starter-actuator:0.5.0.M4')
+    
+    
+    
+    compile('com.fasterxml.jackson.core:jackson-databind')
+        compile('org.springframework.hateoas:spring-hateoas:0.7.0.RELEASE')
+    
+    
+    
+    
+    testCompile "org.codehaus.groovy:groovy-all:2.1.7"
+    testCompile "org.spockframework:spock-core:0.7-groovy-2.0"
+}
+
+task run(type:Exec){
+    commandLine "java -jar build/libs/app-0.1.0.jar".split(' ')
+}
+
+run.dependsOn build
+
+
+task (type: Wrapper) {
+    gradleVersion = '1.8'
+}
