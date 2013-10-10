@@ -1,10 +1,10 @@
 package com.myapp;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.ErrorPage;
-import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,16 +15,25 @@ import org.springframework.http.HttpStatus;
 @EnableAutoConfiguration
 public class Application {
 
+    public static final Log log = LogFactory.getLog(Application.class);
+
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication application = new SpringApplication(Application.class);
+        application.setShowBanner(true);
+        application.run(args);
     }
 
+    //=================================== method 1
     @Bean
-    public EmbeddedServletContainerFactory servletContainer(){
-        JettyEmbeddedServletContainerFactory factory = new JettyEmbeddedServletContainerFactory();
-        factory.setPort(3000);
-        factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error.html"));
-        factory.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error.html"));
-        return factory;
+    public EmbeddedServletContainerCustomizer containerCustomizer(){
+        return new EmbeddedServletContainerCustomizer() {
+            @Override
+            public void customize(ConfigurableEmbeddedServletContainerFactory factory) {
+//                factory.setPort(3000); //getting overridden (see https://github.com/spring-projects/spring-boot/issues/84 workaround for now... use application.properties or ServerProperties) (BUG)
+                factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error/404.html"));
+                log.info("Application.customize");
+            }
+        };
     }
+
 }
