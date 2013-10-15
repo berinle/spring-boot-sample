@@ -9,10 +9,14 @@ import org.springframework.boot.context.embedded.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.thymeleaf.spring3.SpringTemplateEngine;
+import org.thymeleaf.spring3.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import java.util.Properties;
 
@@ -85,6 +89,36 @@ public class Application {
 
         sender.setJavaMailProperties(props);
         return sender;
+    }
+
+
+    @Bean
+    public ServletContextTemplateResolver webTemplateResolver() {
+        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
+        templateResolver.setPrefix("templates/");
+        templateResolver.setTemplateMode("HTML5");
+        templateResolver.setSuffix(".html");
+        templateResolver.setOrder(2);
+        templateResolver.setCacheable(true);
+
+        return templateResolver;
+    }
+
+    @Bean
+    public SpringTemplateEngine templateEngine(){
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        templateEngine.addTemplateResolver(emailTemplateResolver());
+        templateEngine.addTemplateResolver(webTemplateResolver());
+        return templateEngine;
+    }
+
+    @Bean
+    public ThymeleafViewResolver thymeleafViewResolver(){
+        ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+        resolver.setTemplateEngine(templateEngine());
+        resolver.setCharacterEncoding("UTF-8");
+        resolver.setOrder(Ordered.LOWEST_PRECEDENCE - 20);
+        return resolver;
     }
 
 }
