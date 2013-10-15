@@ -1,4 +1,6 @@
-def bootVersion = "0.5.0.M5"
+project.ext {
+    bootVersion = "0.5.0.M5"
+}
 
 buildscript {
     bootVersion = "0.5.0.M5"
@@ -34,7 +36,16 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-jetty:${bootVersion}")
     compile("org.springframework.boot:spring-boot-starter-actuator:${bootVersion}")
     compile('com.fasterxml.jackson.core:jackson-databind')
+
+    //for mail support
+    compile("org.springframework:spring-context-support:4.0.0.M3")
+    compile("javax.mail:mail:1.4.7")
+
+    //thymeleaf support
+    compile('org.thymeleaf:thymeleaf-spring3:2.0.17')
+
     compile('org.springframework.hateoas:spring-hateoas:0.7.0.RELEASE')
+    compile("org.yaml:snakeyaml:1.13")
     testCompile "org.codehaus.groovy:groovy-all:2.1.7"
     testCompile "org.spockframework:spock-core:0.7-groovy-2.0"
 }
