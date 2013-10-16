@@ -42,7 +42,7 @@ dependencies {
     compile("javax.mail:mail:1.4.7")
 
     //thymeleaf support
-    compile('org.thymeleaf:thymeleaf-spring3:2.0.17')
+    compile('org.thymeleaf:thymeleaf-spring3:2.0.19')
 
     compile('org.springframework.hateoas:spring-hateoas:0.7.0.RELEASE')
     compile("org.yaml:snakeyaml:1.13")
