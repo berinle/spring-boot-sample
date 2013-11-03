@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.embedded.*;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -50,6 +51,10 @@ public class Application {
             public void customize(ConfigurableEmbeddedServletContainerFactory factory) {
 //                factory.setPort(3000); //getting overridden (see https://github.com/spring-projects/spring-boot/issues/84 workaround for now... use application.properties or ServerProperties) (BUG)
                 factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error/404.html"));
+                if(factory instanceof TomcatEmbeddedServletContainerFactory){
+                    TomcatEmbeddedServletContainerFactory containerFactory = (TomcatEmbeddedServletContainerFactory) factory;
+                    containerFactory.addConnectorCustomizers(new AppTomcatConnectorCustomizer());
+                }
                 log.info("Application.customize");
             }
         };
