@@ -3,6 +3,7 @@ package com.myapp;
 import org.apache.catalina.connector.Connector;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.ResourceUtils;
 
@@ -11,6 +12,7 @@ import java.io.FileNotFoundException;
 /**
  * @author berinle
  */
+@Component
 public class AppTomcatConnectorCustomizer implements TomcatConnectorCustomizer {
 
     @Value("${server.port}")

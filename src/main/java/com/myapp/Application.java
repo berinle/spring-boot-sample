@@ -2,6 +2,7 @@ package com.myapp;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.SpringApplication;
@@ -37,6 +38,9 @@ public class Application {
     @Value("${mail.server.password}")
     private String password;
 
+    @Autowired
+    AppTomcatConnectorCustomizer appTomcatConnectorCustomizer;
+
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(Application.class);
         application.setShowBanner(true);
@@ -53,7 +57,7 @@ public class Application {
                 factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error/404.html"));
                 if(factory instanceof TomcatEmbeddedServletContainerFactory){
                     TomcatEmbeddedServletContainerFactory containerFactory = (TomcatEmbeddedServletContainerFactory) factory;
-                    containerFactory.addConnectorCustomizers(new AppTomcatConnectorCustomizer());
+                    containerFactory.addConnectorCustomizers(appTomcatConnectorCustomizer);
                 }
                 log.info("Application.customize");
             }
