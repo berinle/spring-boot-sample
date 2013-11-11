@@ -1,9 +1,9 @@
 project.ext {
-    bootVersion = "0.5.0.M5"
+    bootVersion = "0.5.0.M6"
 }
 
 buildscript {
-    bootVersion = "0.5.0.M5"
+    bootVersion = "0.5.0.M6"
     repositories {
         maven { url 'http://repo.springsource.org/libs-snapshot' }
         mavenLocal()
