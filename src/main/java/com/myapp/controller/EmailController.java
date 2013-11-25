@@ -1,6 +1,10 @@
 package com.myapp.controller;
 
+import com.myapp.service.EmailService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,8 +17,16 @@ import org.thymeleaf.spring3.SpringTemplateEngine;
 @Controller
 public class EmailController {
 
+    private static final Log log = LogFactory.getLog(EmailController.class);
+
     @Autowired
     private SpringTemplateEngine templateEngine;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private StringRedisTemplate template;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String showHome(){
@@ -23,13 +35,10 @@ public class EmailController {
 
     @RequestMapping(value = "/email", method = RequestMethod.POST)
     public String sendEmail(){
-        System.out.println("EmailController.sendEmail");
 
-        Context context = new Context();
-        context.setVariable("user", "John Doe");
+        log.debug("EmailController.sendEmail");
 
-        String htmlContent = templateEngine.process("email.html", context);
-        System.out.println("htmlContent = " + htmlContent);
+        template.convertAndSend("testChannel", "hello world");
 
         return "confirm";
     }

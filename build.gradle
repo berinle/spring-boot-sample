@@ -44,6 +44,11 @@ dependencies {
     //thymeleaf support
     compile('org.thymeleaf:thymeleaf-spring3:2.0.19')
 
+    //redis
+    compile('org.springframework.data:spring-data-redis:1.1.0.RELEASE')
+    compile('commons-pool:commons-pool:1.5.6')
+    compile('redis.clients:jedis:2.1.0')
+
     compile('org.springframework.hateoas:spring-hateoas:0.7.0.RELEASE')
     compile("org.yaml:snakeyaml:1.13")
     testCompile "org.codehaus.groovy:groovy-all:2.1.7"

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.embedded.*;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -38,8 +39,12 @@ public class Application {
 
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(Application.class);
-        application.setShowBanner(true);
-        application.run(args);
+        application.setShowBanner(false);
+        ConfigurableApplicationContext ctx = application.run(args);
+        for(String beanName: ctx.getBeanDefinitionNames()){
+            System.out.println("beanName = " + beanName);
+        }
+
     }
 
     //=================================== method 1
