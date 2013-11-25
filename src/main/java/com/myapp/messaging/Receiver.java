@@ -15,8 +15,12 @@ public class Receiver {
 
     private Log log = LogFactory.getLog(Receiver.class);
 
-    @Autowired
+//    @Autowired
     private EmailService emailService;
+
+    public void setEmailService(EmailService emailService) {
+        this.emailService = emailService;
+    }
 
     public void receiveMessage(String message){
         log.info("Received <" + message + ">");

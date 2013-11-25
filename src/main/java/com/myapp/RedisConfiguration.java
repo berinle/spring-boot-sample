@@ -2,6 +2,7 @@ package com.myapp;
 
 import com.myapp.messaging.Receiver;
 import com.myapp.service.EmailService;
+import com.myapp.service.EmailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
+import org.thymeleaf.spring3.SpringTemplateEngine;
 
 /**
  * @author berinle
@@ -34,12 +36,24 @@ public class RedisConfiguration {
 
     @Bean
     MessageListenerAdapter listenerAdapter() {
-        return new MessageListenerAdapter(new Receiver(), "receiveMessage");
+        return new MessageListenerAdapter(receiver(), "receiveMessage");
     }
 
     @Bean
     StringRedisTemplate template(JedisConnectionFactory connectionFactory){
         return new StringRedisTemplate(connectionFactory);
+    }
+
+    @Bean
+    Receiver receiver(){
+        Receiver receiver = new Receiver();
+        receiver.setEmailService(emailService());
+        return receiver;
+    }
+
+    @Bean
+    EmailService emailService(){
+        return new EmailServiceImpl();
     }
 
 }
