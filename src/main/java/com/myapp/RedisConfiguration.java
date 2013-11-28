@@ -35,6 +35,7 @@ public class RedisConfiguration {
                 URI uri = new URI(rediscloud_url);
                 connectionFactory.setHostName(uri.getHost());
                 connectionFactory.setPort(uri.getPort());
+                connectionFactory.setPassword(uri.getUserInfo().split(":", 2)[1]);
             }
         } catch (URISyntaxException e) {
             log.error(e);
