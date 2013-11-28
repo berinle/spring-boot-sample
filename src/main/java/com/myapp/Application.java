@@ -40,11 +40,7 @@ public class Application {
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(Application.class);
         application.setShowBanner(false);
-        ConfigurableApplicationContext ctx = application.run(args);
-        for(String beanName: ctx.getBeanDefinitionNames()){
-            System.out.println("beanName = " + beanName);
-        }
-
+        application.run(args);
     }
 
     //=================================== method 1
