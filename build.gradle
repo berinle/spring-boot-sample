@@ -1,9 +1,9 @@
 project.ext {
-    bootVersion = "0.5.0.M5"
+    bootVersion = "0.5.0.M6"
 }
 
 buildscript {
-    bootVersion = "0.5.0.M5"
+    bootVersion = "0.5.0.M6"
     repositories {
         maven { url 'http://repo.springsource.org/libs-snapshot' }
         mavenLocal()
@@ -66,5 +66,5 @@ task stage(dependsOn: ['clean', 'repackage'])
 
 
 task (type: Wrapper) {
-    gradleVersion = '1.8'
+    gradleVersion = '1.9'
 }
