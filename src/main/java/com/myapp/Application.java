@@ -32,9 +32,9 @@ public class Application {
 
     @Value("${mail.server.protocol}")
     private String protocol;
-    @Value("${mail.server.username}")
+    @Value("${SENDGRID_USERNAME}")
     private String username;
-    @Value("${mail.server.password}")
+    @Value("${SENDGRID_PASSWORD}")
     private String password;
 
     public static void main(String[] args) {

@@ -38,7 +38,7 @@ dependencies {
     compile('com.fasterxml.jackson.core:jackson-databind')
 
     //for mail support
-    compile("org.springframework:spring-context-support:4.0.0.M3")
+    compile("org.springframework:spring-context-support:4.0.0.RC1")
     compile("javax.mail:mail:1.4.7")
 
     //thymeleaf support
